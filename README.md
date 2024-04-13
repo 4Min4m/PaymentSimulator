@@ -6,6 +6,11 @@
 
 The Payment Switch Service Simulator is a tool designed to simulate the behavior of a payment switch service for testing and development purposes.
 
+## Project Scope
+
+For detailed information about the scope of this project, please refer to [Requirements and Scope](Requirements and Scope.md).
+
+
 ## Getting Started
 
 To get started with the simulator, follow these steps:
