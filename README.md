@@ -1,6 +1,6 @@
 # Payment Switch Service Simulator
 
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![License](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 ## Introduction
 
@@ -34,6 +34,6 @@ Contributing
 Contributions to the project are welcome! If you encounter any issues or have ideas for improvements, please open an issue on GitHub or submit a pull request.
 
 License
-This project is licensed under the GNU GPLv3 License - see the LICENSE file for details.
+This project is licensed under the GPLv3 License - see the LICENSE file for details.
 
 Feel free to customize this template to fit the specific needs and structure of your project. And if you have any questions or need further assistance, just let me know!
