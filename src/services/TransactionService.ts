@@ -1,4 +1,5 @@
 import { Transaction, TransactionType, ISO8583Like } from '../types/transaction';
+import { supabase } from './supabaseClient';
 
 export class TransactionService {
   private static generateTrace(): string {
@@ -30,7 +31,8 @@ export class TransactionService {
     type: TransactionType,
     amount: number,
     cardNumber: string,
-    merchantId: string
+    merchantId: string,
+    simulationBatchId?: string
   ): Promise<Transaction> {
     const transaction: Transaction = {
       id: crypto.randomUUID(),
@@ -48,14 +50,30 @@ export class TransactionService {
     // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 1000));
 
-    // Simulate basic validation
+    // Simulate basic validation and set status
     if (cardNumber.length !== 16 || !/^\d+$/.test(cardNumber)) {
       transaction.status = 'ERROR';
-      return transaction;
+    } else {
+      transaction.status = Math.random() > 0.15 ? 'APPROVED' : 'DECLINED';
     }
 
-    // Simulate issuer response (approve ~85% of transactions)
-    transaction.status = Math.random() > 0.15 ? 'APPROVED' : 'DECLINED';
+    // Insert into Supabase
+    const { error } = await supabase.from('transactions').insert({
+      id: transaction.id,
+      type: transaction.type,
+      amount: transaction.amount,
+      card_number: transaction.cardNumber,
+      merchant_id: transaction.merchantId,
+      status: transaction.status,
+      timestamp: transaction.timestamp,
+      iso8583_message: transaction.message,
+      simulation_batch_id: simulationBatchId
+    });
+
+    if (error) {
+      console.error('Failed to save transaction:', error);
+      throw error;
+    }
 
     return transaction;
   }
