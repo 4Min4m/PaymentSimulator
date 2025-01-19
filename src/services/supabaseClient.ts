@@ -1,23 +1,10 @@
-const user = supabase.auth.user();
+import { createClient } from '@supabase/supabase-js';
 
-if (user) {
-  const transaction = {
-    id: crypto.randomUUID(),
-    type: 'PURCHASE',
-    amount: 100,
-    cardNumber: '1234567812345678',
-    merchantId: 'merchant_123',
-    status: 'PENDING',
-    timestamp: new Date().toISOString(),
-  };
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-  const { error } = await supabase.from('transactions').insert(transaction);
-
-  if (error) {
-    console.error('Failed to save transaction:', error);
-  } else {
-    console.log('Transaction saved successfully!');
-  }
-} else {
-  console.error('User  is not authenticated');
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error('Missing Supabase environment variables');
 }
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
