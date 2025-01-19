@@ -36,42 +36,42 @@ export function TransactionForm({ onTransactionComplete }: TransactionFormProps)
   return (
     <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-md">
       <div className="flex gap-2">
-        <button
-          type="button"
-          onClick={() => setType('PURCHASE')}
-          className={\`flex items-center gap-2 px-4 py-2 rounded-lg \${
-            type === 'PURCHASE'
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-100 text-gray-700'
-          }\`}
-        >
-          <CreditCard size={20} />
-          Purchase
-        </button>
-        <button
-          type="button"
-          onClick={() => setType('REFUND')}
-          className={\`flex items-center gap-2 px-4 py-2 rounded-lg \${
-            type === 'REFUND'
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-100 text-gray-700'
-          }\`}
-        >
-          <RefreshCcw size={20} />
-          Refund
-        </button>
-        <button
-          type="button"
-          onClick={() => setType('REVERSAL')}
-          className={\`flex items-center gap-2 px-4 py-2 rounded-lg \${
-            type === 'REVERSAL'
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-100 text-gray-700'
-          }\`}
-        >
-          <RotateCcw size={20} />
-          Reversal
-        </button>
+      <button
+  type="button"
+  onClick={() => setType('PURCHASE')}
+  className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
+    type === 'PURCHASE'
+      ? 'bg-blue-600 text-white'
+      : 'bg-gray-100 text-gray-700'
+  }`}
+>
+  <CreditCard size={20} />
+  Purchase
+</button>
+<button
+  type="button"
+  onClick={() => setType('REFUND')}
+  className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
+    type === 'REFUND'
+      ? 'bg-blue-600 text-white'
+      : 'bg-gray-100 text-gray-700'
+  }`}
+>
+  <RefreshCcw size={20} />
+  Refund
+</button>
+<button
+  type="button"
+  onClick={() => setType('REVERSAL')}
+  className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
+    type === 'REVERSAL'
+      ? 'bg-blue-600 text-white'
+      : 'bg-gray-100 text-gray-700'
+  }`}
+>
+  <RotateCcw size={20} />
+  Reversal
+</button>
       </div>
 
       <div>
