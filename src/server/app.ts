@@ -1,5 +1,5 @@
 import express from 'express';
-import { transactionRouter } from './routes/transactionRoutes';
+import { transactionRouter } from './routes/transactionRoutes.ts';
 import { errorHandler } from './middleware/errorHandler';
 import { requestLogger } from './middleware/requestLogger';
 import { config } from './config';
