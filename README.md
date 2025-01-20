@@ -1,44 +1,126 @@
-# Payment Switch Service Simulator
+# Payment Processing Simulator
 
-[![License](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+A robust payment transaction simulator designed to test and demonstrate payment processing workflows, built with React, TypeScript, and Supabase. This application simulates real-world payment processing scenarios, including transaction processing, load testing, and ISO8583-like message generation.
 
-## Introduction
+## Features
 
-The Payment Switch Service Simulator is a tool designed to simulate the behavior of a payment switch service for testing and development purposes.
+### Transaction Processing
+- Support for multiple transaction types:
+  - Purchases
+  - Refunds
+  - Reversals
+- Real-time transaction status updates
+- ISO8583-like message generation
+- Secure card number handling with masking
+- Merchant ID tracking
 
-## Project Scope
+### Load Testing
+- Configurable transactions per second (TPS)
+- Adjustable test duration
+- Customizable transaction amounts
+- Real-time performance metrics
+- Batch simulation tracking
 
-For detailed information about the scope of this project, please refer to [Requirements and Scope](Requirements and Scope.md).
+### Analytics
+- Transaction success rate monitoring
+- Actual TPS calculations
+- Total amount tracking
+- Detailed transaction logs
 
+## Technology Stack
+
+- **Frontend**: React with TypeScript
+- **Styling**: Tailwind CSS
+- **Icons**: Lucide React
+- **Database**: Supabase
+- **Build Tool**: Vite
 
 ## Getting Started
 
-To get started with the simulator, follow these steps:
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Connect to Supabase:
+   - Click the "Connect to Supabase" button in the top right
+   - Wait for the connection process to complete
 
-1. Clone the repository to your local machine.
-2. Install the required dependencies using `npm install`.
-3. Configure the simulator by modifying the `config.js` file according to your requirements.
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-## Configuration
+## Database Schema
 
-The `config.js` file contains various settings that can be adjusted to customize the behavior of the simulator. Refer to the comments in the file for guidance on each configuration option.
+### Tables
+- `transactions`: Stores individual transaction records
+- `simulation_batches`: Tracks load test simulation runs
 
-## Usage
+### Security
+- Row Level Security (RLS) enabled
+- Policies for authenticated users
+- Secure data access controls
 
-To run the simulator, use the following command:
+## Known Issues and Resolutions
 
-```bash
-npm start
+### Resolved Issues
 
-Testing
-To test the functionality of the simulator, you can use the included test suite. Run the tests using the following command:
-npm test
+1. **RLS Policy Violations**
+   - Issue: Initial transactions failed due to RLS policy restrictions
+   - Resolution: Implemented proper RLS policies for authenticated users
 
+2. **Supabase Client Export**
+   - Issue: Supabase client export was missing
+   - Resolution: Fixed the supabaseClient.ts file to properly export the client
 
-Contributing
-Contributions to the project are welcome! If you encounter any issues or have ideas for improvements, please open an issue on GitHub or submit a pull request.
+### Current Limitations
 
-License
-This project is licensed under the GPLv3 License - see the LICENSE file for details.
+1. **Transaction Simulation**
+   - Currently simulates basic approval/decline scenarios
+   - Future enhancement: Add more complex validation rules
 
-Feel free to customize this template to fit the specific needs and structure of your project. And if you have any questions or need further assistance, just let me know!
+2. **Load Testing**
+   - Limited to single-instance testing
+   - Future enhancement: Distributed load testing support
+
+## Future Plans
+
+1. **Enhanced Transaction Processing**
+   - Add support for more transaction types
+   - Implement advanced fraud detection simulation
+   - Add support for different card types
+
+2. **Advanced Load Testing**
+   - Distributed load testing capabilities
+   - Custom scenario creation
+   - Advanced metrics and reporting
+
+3. **Analytics Dashboard**
+   - Real-time transaction monitoring
+   - Advanced analytics and reporting
+   - Custom metric tracking
+
+4. **Security Enhancements**
+   - Additional authentication methods
+   - Enhanced encryption simulation
+   - PCI compliance demonstration
+
+5. **API Integration**
+   - External payment gateway simulation
+   - Webhook support
+   - Third-party integration examples
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit pull requests.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- Built with [Supabase](https://supabase.com) for real-time database capabilities
+- UI components powered by [Tailwind CSS](https://tailwindcss.com)
+- Icons provided by [Lucide](https://lucide.dev)
