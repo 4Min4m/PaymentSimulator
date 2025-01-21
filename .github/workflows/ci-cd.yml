@@ -49,7 +49,7 @@ jobs:
       - name: Deploy to EC2 using Ansible
         env:
           ANSIBLE_HOST_KEY_CHECKING: "False"
-          EC2_PRIVATE_IP: "your-ec2-private-ip"
+          EC2_PRIVATE_IP: "13.61.23.124"
           EC2_USER: "ubuntu"
         run: |
           ansible-playbook -i "$EC2_PRIVATE_IP," -u "$EC2_USER" --private-key ~/.ssh/id_rsa ./ansible/deploy.yml
