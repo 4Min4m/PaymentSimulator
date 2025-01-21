@@ -1,0 +1,12 @@
+---
+- hosts: all
+  tasks:
+    - name: copyFiles
+      copy:
+        src: ./build/
+        dest: /var/www/html/
+      
+    - name: restartServer
+      service:
+        name: nginx
+        state: restarted
