@@ -1,7 +1,7 @@
 import { Transaction, TransactionType } from '../types/transaction';
 
 export class TransactionService {
-  private static API_URL = '/api/transactions';
+  private static API_URL = process.env.APP_API_URL;
 
   static async processTransaction(
     type: TransactionType,
