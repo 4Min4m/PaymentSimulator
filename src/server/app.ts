@@ -18,6 +18,6 @@ app.use('/api/transactions', transactionRouter);
 app.use(errorHandler);
 
 // Start server
-app.listen(config.port, () => {
+app.listen(config.port, '0.0.0.0', () => {
   logger.info(`Server running on port ${config.port}`);
 });

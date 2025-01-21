@@ -1,5 +1,5 @@
 export const config = {
-    port: process.env.PORT || 3000,
+    port: process.env.PORT || 5173,
     environment: process.env.NODE_ENV || 'development',
     supabase: {
       url: process.env.VITE_SUPABASE_URL,
