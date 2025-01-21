@@ -41,14 +41,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Deploy to EC2
+      - name: Setup Ansible
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ansible
+
+      - name: Deploy to EC2 using Ansible
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
-          EC2_HOST: "your-ec2-public-ip"
+          ANSIBLE_HOST_KEY_CHECKING: "False"
+          EC2_PRIVATE_IP: "your-ec2-private-ip"
           EC2_USER: "ubuntu"
         run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-
-          ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST "bash -s" < ./deploy.sh
+          ansible-playbook -i "$EC2_PRIVATE_IP," -u "$EC2_USER" --private-key ~/.ssh/id_rsa ./ansible/deploy.yml
