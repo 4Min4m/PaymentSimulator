@@ -48,4 +48,4 @@ jobs:
         env:
           ANSIBLE_HOST_KEY_CHECKING: "False"
           SSH_PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
-          INVENTORY: ansible/inventory.ini
+          INVENTORY: .ansible/inventory.ini
