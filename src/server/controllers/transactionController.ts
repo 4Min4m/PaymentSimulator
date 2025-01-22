@@ -6,10 +6,8 @@ import { logger } from '../utils/logger';
 export class TransactionController {
   static async processTransaction(req: Request, res: Response, next: NextFunction) {
     try {
-      // Validation
       const validatedData = TransactionValidator.validateTransaction(req.body);
       
-      //Process
       const transaction = await TransactionService.processTransaction(
         validatedData.type,
         validatedData.amount,
@@ -19,10 +17,19 @@ export class TransactionController {
       );
 
       logger.info('Transaction processed successfully', { transactionId: transaction.id });
-      res.status(200).json(transaction);
+      return res.status(200).json(transaction);
     } catch (error) {
-      logger.error('Transaction processing error:', error);
-      next(error);
+      logger.error('Transaction processing error', { error });
+      if (error instanceof Error) {
+        return res.status(400).json({ 
+          error: true,
+          message: error.message || 'Transaction processing failed'
+        });
+      }
+      return res.status(500).json({ 
+        error: true,
+        message: 'Internal server error'
+      });
     }
   }
 }

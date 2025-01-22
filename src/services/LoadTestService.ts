@@ -1,6 +1,6 @@
 import { Transaction, TransactionType } from '../types/transaction';
 import { TransactionService } from './TransactionService';
-import { supabase } from './supabaseClient';
+import { supabase } from '../server/utils/supabaseClient';
 
 export interface LoadTestConfig {
   targetTPS: number;

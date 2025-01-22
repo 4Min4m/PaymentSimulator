@@ -56,12 +56,19 @@
         NODE_ENV: production
         VITE_SUPABASE_URL: "{{ lookup('env', 'VITE_SUPABASE_URL') }}"
         VITE_SUPABASE_ANON_KEY: "{{ lookup('env', 'VITE_SUPABASE_ANON_KEY') }}"
-        VITE_API_URL: "{{ lookup('env', 'VITE_API_URL') }}"
 
-    - name: Start/Restart application with PM2
+    - name: Start API server with PM2
       ansible.builtin.shell: |
-        pm2 delete "payment-simulator" || true
-        pm2 start npm --name "payment-simulator" -- start
+        pm2 delete "payment-simulator-api" || true
+        pm2 start npm --name "payment-simulator-api" -- run start:api
+      args:
+        chdir: "{{ app_dir }}"
+      become_user: ubuntu
+
+    - name: Start frontend with PM2
+      ansible.builtin.shell: |
+        pm2 delete "payment-simulator-frontend" || true
+        pm2 start npm --name "payment-simulator-frontend" -- start
       args:
         chdir: "{{ app_dir }}"
       become_user: ubuntu

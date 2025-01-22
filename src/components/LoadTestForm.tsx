@@ -1,6 +1,19 @@
 import React, { useState } from 'react';
 import { Play, Loader2 } from 'lucide-react';
-import { LoadTestService, LoadTestResult } from '../services/LoadTestService';
+
+interface LoadTestConfig {
+  targetTPS: number;
+  durationSeconds: number;
+  averageAmount: number;
+  amountVariance: number;
+}
+
+interface LoadTestResult {
+  batchId: string;
+  actualTPS: number;
+  totalAmount: number;
+  successRate: number;
+}
 
 interface LoadTestFormProps {
   onTestComplete: (result: LoadTestResult) => void;
@@ -20,7 +33,19 @@ export function LoadTestForm({ onTestComplete }: LoadTestFormProps) {
     setLoading(true);
 
     try {
-      const result = await LoadTestService.runLoadTest(config);
+      const response = await fetch('/api/transactions/load-test', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(config),
+      });
+
+      if (!response.ok) {
+        throw new Error('Load test failed');
+      }
+
+      const result = await response.json();
       onTestComplete(result);
     } catch (error) {
       console.error('Load test failed:', error);

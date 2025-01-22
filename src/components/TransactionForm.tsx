@@ -17,7 +17,7 @@ export function TransactionForm({ onTransactionComplete }: TransactionFormProps)
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
+  
     try {
       const transaction = await TransactionService.processTransaction(
         type,
@@ -28,6 +28,7 @@ export function TransactionForm({ onTransactionComplete }: TransactionFormProps)
       onTransactionComplete(transaction);
     } catch (error) {
       console.error('Transaction failed:', error);
+      alert(`Transaction failed: ${error.message}`); // Optionally show an alert to the user
     } finally {
       setLoading(false);
     }

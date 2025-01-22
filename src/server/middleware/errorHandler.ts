@@ -11,8 +11,14 @@ export const errorHandler = (
   logger.error('Error occurred', { error });
 
   if (error instanceof TransactionError) {
-    return res.status(400).json({ error: error.message });
+    return res.status(400).json({ 
+      error: true,
+      message: error.message 
+    });
   }
 
-  res.status(500).json({ error: 'Internal server error' });
+  return res.status(500).json({ 
+    error: true,
+    message: 'Internal server error'
+  });
 };

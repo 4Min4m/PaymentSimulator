@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import { Transaction, TransactionType } from '../../types/transaction';
 import { supabase } from '../utils/supabaseClient';
 import { ISO8583Helper } from '../utils/iso8583Helper';
@@ -15,7 +14,7 @@ export class TransactionService {
   ): Promise<Transaction> {
     try {
       const transaction: Transaction = {
-        id: uuidv4(),
+        id: crypto.randomUUID(),
         type,
         amount,
         cardNumber,
