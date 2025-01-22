@@ -1,31 +1,67 @@
 ---
 - name: Deploy Application
-  hosts: all
+  hosts: production
   become: true
+  vars:
+    app_dir: /home/ubuntu/PaymentSimulator
+    node_version: 18
   tasks:
-    - name: Clone or update repository
-      ansible.builtin.git:
-        repo: "https://github.com/4Min4m/PaymentSimulator.git"
-        dest: /home/ubuntu/PaymentSimulator
-        version: main
-        update: yes
+    - name: Install Node.js
+      ansible.builtin.shell: |
+        curl -fsSL https://deb.nodesource.com/setup_{{ node_version }}.x | sudo -E bash -
+        apt-get install -y nodejs
+
+    - name: Install PM2
+      ansible.builtin.npm:
+        name: pm2
+        global: yes
+        state: present
+
+    - name: Create app directory
+      ansible.builtin.file:
+        path: "{{ app_dir }}"
+        state: directory
+        owner: ubuntu
+        group: ubuntu
+        mode: '0755'
+
+    - name: Copy application files
+      ansible.builtin.copy:
+        src: ../
+        dest: "{{ app_dir }}"
+        owner: ubuntu
+        group: ubuntu
+        mode: '0755'
 
     - name: Install dependencies
-      ansible.builtin.shell: |
-        cd /home/ubuntu/PaymentSimulator
-        npm install
+      ansible.builtin.shell: npm ci
       args:
-        chdir: /home/ubuntu/PaymentSimulator
+        chdir: "{{ app_dir }}"
+      become_user: ubuntu
 
-    - name: Build the project
-      ansible.builtin.shell: |
-        cd /home/ubuntu/PaymentSimulator
-        npm run build
-      args:
-        chdir: /home/ubuntu/PaymentSimulator
+    - name: Create environment file
+      ansible.builtin.template:
+        src: .env.j2
+        dest: "{{ app_dir }}/.env"
+        owner: ubuntu
+        group: ubuntu
+        mode: '0600'
 
-    - name: Restart application
-      ansible.builtin.shell: |
-        pm2 restart all || pm2 start npm --name " vite-react-typescript-starter" -- start
+    - name: Build application
+      ansible.builtin.shell: npm run build
       args:
-        chdir: /home/ubuntu/PaymentSimulator
+        chdir: "{{ app_dir }}"
+      become_user: ubuntu
+      environment:
+        NODE_ENV: production
+        VITE_SUPABASE_URL: "{{ lookup('env', 'VITE_SUPABASE_URL') }}"
+        VITE_SUPABASE_ANON_KEY: "{{ lookup('env', 'VITE_SUPABASE_ANON_KEY') }}"
+        VITE_API_URL: "{{ lookup('env', 'VITE_API_URL') }}"
+
+    - name: Start/Restart application with PM2
+      ansible.builtin.shell: |
+        pm2 delete "payment-simulator" || true
+        pm2 start npm --name "payment-simulator" -- start
+      args:
+        chdir: "{{ app_dir }}"
+      become_user: ubuntu
