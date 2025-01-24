@@ -1,0 +1,10 @@
+- name: Setup My Server
+  hosts: all
+  tasks:
+    - name: Install Node.js and Nginx
+      apt:
+        name:
+          - nodejs
+          - npm
+          - nginx
+        state: present
