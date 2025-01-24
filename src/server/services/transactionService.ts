@@ -1,5 +1,5 @@
 import { Transaction, TransactionType } from '../../types/transaction';
-import { supabase } from '../utils/supabaseClient';
+import { supabase } from '../utils/supabaseClient.ts';
 import { ISO8583Helper } from '../utils/iso8583Helper';
 import { logger } from '../utils/logger';
 import { TransactionError } from '../errors/TransactionError';
